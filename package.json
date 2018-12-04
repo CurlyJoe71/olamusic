@@ -1,0 +1,25 @@
+{
+  "name": "olamusic",
+  "version": "1.0.0",
+  "description": "\"Music planner for Our Lady of the Angels Conventual Church, Paradise Valley, Arizona\"",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/CurlyJoe71/olamusic.git"
+  },
+  "author": "\"Jaime Gonzalez\"",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/CurlyJoe71/olamusic/issues"
+  },
+  "homepage": "https://github.com/CurlyJoe71/olamusic#readme",
+  "dependencies": {
+    "body-parser": "^1.18.3",
+    "express": "^4.16.4",
+    "mongojs": "^2.6.0",
+
+  }
+}
