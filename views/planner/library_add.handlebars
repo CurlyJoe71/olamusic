@@ -1,0 +1,37 @@
+<h4>Add to the Library</h4>
+<h5></h5>
+<div class="row">
+    <form id="library_add" data-id="{{_id}}" class="col s12" method="POST" action="">
+      <div class="row">
+        <div class="input-field col s6">
+          <input name="title" id="title" type="text" class="validate" value="">
+          <label class="active" for="title">Title</label>
+        </div>
+        <div class="input-field col s6">
+          <input value="" name="composer" id="composer" type="text" class="validate">
+          <label for="composer">Composer</label>
+        </div>
+      </div>
+      <div class="row">
+        <div class="input-field col s12">
+          <textarea id="refrain" name="refrain" class="materialize-textarea"></textarea>
+          <label for="refrain">Refrain</label>
+        </div>
+      </div>
+      <div class="row">
+          <div class="input-field col s12">
+              <textarea id="" name="verse" class="materialize-textarea verse"></textarea>
+      <label for="verse">Verses</label>
+          </div>
+      </div>
+      <div class="row">
+          <div class="input-field col s12">
+              <textarea id="copyright" name="copyright" class="materialize-textarea"></textarea>
+              <label for="copyright">Copyright</label>
+          </div>
+      </div>
+        <button class="btn waves-effect waves-light" type="submit" >Add
+    <i class="material-icons right">add_box</i>
+  </button>
+    </form>
+  </div>

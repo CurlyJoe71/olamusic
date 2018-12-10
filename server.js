@@ -3,24 +3,10 @@ var bodyParser = require("body-parser");
 var app = express();
 var exphbs = require("express-handlebars");
 
-var mongojs = require("mongojs");
-
-// Initialize Express
-var app = express();
-
-// Database configuration
-var databaseUrl = "ola_music_planner";
-var collections = ["planner"];
-
-// Hook mongojs configuration to the db variable
-var db = mongojs(databaseUrl, collections);
-db.on("error", function (error) {
-  console.log("Database Error:", error);
-});
-
 app.use(bodyParser.json());
-app.use(bodyParser.text());
-app.use(bodyParser.json({ type: "application/vnd.api+json" }));
+// app.use(bodyParser.text());
+// app.use(bodyParser.json({ type: "application/vnd.api+json" }));
+app.use(bodyParser.urlencoded({ extended: true }));
 
 app.use(express.static(__dirname + "/public"));
 

@@ -1,0 +1,12 @@
+{
+    "_id" : ObjectId("5c0d32ed0619ff3c433f2ebc"),
+    "title": "Advent Gathering",
+    "composer": "Gary Daigle",
+    "refrain": "This is the refrain of Advent Gathering.",
+    "verses": {
+        "1" : "This is verse 1 of Advent Gathering.",
+        "2" : "This is verse 2 of Advent Gathering.",
+        "3" : "This is verse 3 of Advent Gathering."
+    },
+    "copyright": "This is the copyright for Advent Gathering."
+}

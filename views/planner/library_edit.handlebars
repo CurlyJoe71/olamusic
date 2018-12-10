@@ -1,0 +1,39 @@
+<h4>{{ title }}</h4>
+<h5>by {{ composer }}</h5>
+<div class="row">
+    <form id="library_edit" data-id="{{_id}}" class="col s12" method="POST" action="/update/library/{{_id}}">
+      <div class="row">
+        <div class="input-field col s6">
+          <input name="title" id="title" type="text" class="validate" value="{{ title }}">
+          <label class="active" for="title">Title</label>
+        </div>
+        <div class="input-field col s6">
+          <input value="{{ composer }}" name="composer" id="composer" type="text" class="validate">
+          <label for="composer">Composer</label>
+        </div>
+      </div>
+      <div class="row">
+        <div class="input-field col s12">
+          <textarea id="refrain" name="refrain" class="materialize-textarea">{{ refrain }}</textarea>
+          <label for="refrain">Refrain</label>
+        </div>
+      </div>
+      <label for="verse">Verses</label>
+      {{#each verses}}
+      <div class="row">
+          <div class="input-field col s12">
+              <textarea id="{{@key}}" name="verse" class="materialize-textarea verse">{{ this }}</textarea>
+          </div>
+      </div>
+      {{/each}}
+      <div class="row">
+          <div class="input-field col s12">
+              <textarea id="copyright" name="copyright" class="materialize-textarea">{{ copyright }}</textarea>
+              <label for="copyright">Copyright</label>
+          </div>
+      </div>
+        <button class="btn waves-effect waves-light" type="submit" >Update
+    <i class="material-icons right">refresh</i>
+  </button>
+    </form>
+  </div>
