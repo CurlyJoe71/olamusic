@@ -41,7 +41,7 @@ module.exports = function (app) {
     let reqBody = Object.keys(req.body);
     console.log(reqBody[0]);
 
-    db.library.update({}, { $set: { "render": false } }, {multi:true}, function (err, data) {
+    db.library.update({}, { $set: { "render": false } }, { multi: true }, function (err, data) {
       if (err) {
         console.log(err);
       }
@@ -55,14 +55,14 @@ module.exports = function (app) {
             console.log("finished query");
             console.log(data);
             res.send("got it");
-          };
-        });
+          }
+        })
       };
     });
-
   });
 
   app.get("/library", function (req, res) {
+
     db.library.find({}, function (err, data) {
       if (err) {
         console.log(err);
@@ -72,7 +72,31 @@ module.exports = function (app) {
           data: data
         }
         res.render("planner/library", obj);
+      };
+    });
+  });
+
+  app.get("/reset/library", function (req, res) {
+
+    db.library.update({}, { $set: { "render": true } }, { multi: true }, function (err, data) {
+      if (err) {
+        console.log(err);
       }
+      else {
+
+        db.library.find({}, function(err, data) {
+          if (err) {
+            console.log(err);
+          }
+          else {
+            let obj = {
+              data:data
+            };
+
+            res.render("planner/library", obj);
+          }
+        })
+      };
     });
   });
 
@@ -134,48 +158,56 @@ module.exports = function (app) {
   });
 
   app.get("/home", function (req, res) {
-    db.planner.find({}, function (err, data) {
+
+    db.library.update({}, { $set: { "render": true } }, { multi: true }, function (err, data) {
       if (err) {
         console.log(err);
       }
       else {
-        console.log("I got the data");
-        let obj = {
-          caldate: data[0].caldate,
-          season: data[0].season,
-          litdate: data[0].litdate,
-          cycle: data[0].cycle,
-          opening: data[0].opening.title,
-          opening_composer: data[0].opening.composer,
-          prep: data[0].prep.title,
-          prep_composer: data[0].prep.composer,
-          communion1: data[0].communion1.title,
-          communion1_composer: data[0].communion1.composer,
-          communion2: data[0].communion2.title,
-          communion2_composer: data[0].communion2.composer,
-          closing: data[0].closing.title,
-          closing_composer: data[0].closing.composer
-        };
-        console.log(data);
-        console.log(obj);
-        // res.json(data);
 
-        db.library.find({ "title": obj.opening }, function (err, data) {
-          if (err) {
-            console.log(err);
-          }
-          else {
-            obj.opening_lyrics = {
-              refrain: data[0].refrain,
-              verses: data[0].verses
-            };
-          };
+        // db.planner.find({}, function (err, data) {
+        //   if (err) {
+        //     console.log(err);
+        //   }
+        //   else {
+        //     console.log("I got the data");
+        //     let obj = {
+        //       caldate: data[0].caldate,
+        //       season: data[0].season,
+        //       litdate: data[0].litdate,
+        //       cycle: data[0].cycle,
+        //       opening: data[0].opening.title,
+        //       opening_composer: data[0].opening.composer,
+        //       prep: data[0].prep.title,
+        //       prep_composer: data[0].prep.composer,
+        //       communion1: data[0].communion1.title,
+        //       communion1_composer: data[0].communion1.composer,
+        //       communion2: data[0].communion2.title,
+        //       communion2_composer: data[0].communion2.composer,
+        //       closing: data[0].closing.title,
+        //       closing_composer: data[0].closing.composer
+        //     };
+        //     console.log(data);
+        //     console.log(obj);
+        //     // res.json(data);
 
-          res.render("planner/last", obj);
+        //     db.library.find({ "title": obj.opening }, function (err, data) {
+        //       if (err) {
+        //         console.log(err);
+        //       }
+        //       else {
+        //         obj.opening_lyrics = {
+        //           refrain: data[0].refrain,
+        //           verses: data[0].verses
+        //         };
+        //       };
 
-        })
+        res.render("planner/last");
 
-      }
+        //     })
+        //   };
+        // });
+      };
     });
   });
 

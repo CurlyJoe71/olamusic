@@ -1,8 +1,19 @@
-<h4>Music Library</h4>
+  <a href="/home" class="brand-logo"><h3 class="header">Our Lady of the Angels Music Planner</h3></a>
+  
+  <div id="buttons">
+    <a href="/home"><button class="btn" id="home">Home</button></a>
+   
+<a href="#"><button class="btn" id="library_reset">Library</button></a>
+  </div>
 
-<div class="row">
+<h4>Music Library</h4>
+<div id="buttons">
+    <a href="/add/library"><button class="btn" id="add_library">Add New Song</button></a>
+  </div>
+
+<div class="">
     <div class="col s12">
-      <div class="row">
+      <div class="">
         <div class="input-field col s12">
           <i class="material-icons prefix">search</i>
           <input type="text" id="autocomplete-input" class="autocomplete">
@@ -11,6 +22,29 @@
       </div>
     </div>
   </div>
+
+<div class="row">
+ <form action="#">
+    
+      <label for="query_title">
+        <input name="query" id="query_title" type="radio" checked />
+        <span>Title</span>
+      </label>
+   
+      <label for="query_composer">
+        <input name="query" id="query_composer" type="radio" />
+        <span>Composer</span>
+      </label>
+   
+      <label for="query_other">
+        <input class="" id="query_other" name="query" type="radio"  />
+        <span>Other?</span>
+      </label>
+   
+  </form>
+
+</div>
+
 
 <ul class="collapsible popout">
     {{#each data}}
@@ -23,7 +57,7 @@
         <p>{{ this }}</p>
         {{/each }}
         <p>{{ copyright }}</p>
-        <a href="/library/{{ _id}}" class="waves-effect waves-teal btn-flat edit" data-id="{{ _id }}">Edit</a>
+        <a href="/library/{{ _id}}" target="_blank" class="waves-effect waves-teal btn-flat edit" data-id="{{ _id }}">Edit</a>
         </div>
     </li>
         {{/if}}

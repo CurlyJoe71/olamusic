@@ -3,38 +3,68 @@ $(document).ready(function () {
     M.updateTextFields();
     M.textareaAutoResize($('#refrain'));
     $('.scrollspy').scrollSpy();
-
-    document.addEventListener('DOMContentLoaded', function () {
-    });
+    $('.modal').modal();
+    let data = {};
+    $('input.autocomplete').autocomplete({data});
 
     let titleObject = {};
+    let radioValue;
+
+
+    $("input[type='radio']").click(function () {
+        radioValue = $("input[name='query']:checked").parent().find("span").text();
+        console.log(radioValue);
+
+        let instance = M.Autocomplete.getInstance($(".autocomplete"));
+        instance.close();
+    });
+
+    $("#library_reset").on("click", function (e) {
+        e.preventDefault;
+
+        $.ajax({
+            method: "GET",
+            url: "/reset/library"
+        })
+            .then(function (data) {
+                location.reload();
+            });
+    });
+
+
 
     $("#autocomplete-input").one('focus', function () {
         $.get("/all/library", function (data) {
-            for (let i = 0; i < data.length; i++) {
-                titleObject[data[i].title] = null;
+
+            let queryParam = "title";
+            let queryObject = {};
+
+            if (radioValue) {
+                queryParam = "composer";
             };
-            console.log(titleObject);
+
+            for (let i = 0; i < data.length; i++) {
+                queryObject[data[i][queryParam]] = null;
+            };
+            console.log(queryObject);
+
             $('input.autocomplete').autocomplete({
-                data: titleObject
+                data: queryObject
             });
 
-            $(".dropdown-content").on("click", function(e) {
-                // e.preventDefault;
+            $(".dropdown-content").on("click", function (e) {
+                e.preventDefault;
                 let value = $("input").val();
-                // value = Object.keys(value);
                 console.log(value);
                 $.ajax({
                     method: "PUT",
                     url: "/search/library",
                     data: value
                 })
-                .then(function(data) {
-                    console.log(data);
-                    location.reload();
-                    if (data) {
-                    }
-                })
+                    .then(function (data) {
+                        console.log(data);
+                        location.reload();
+                    });
             });
         });
     });
@@ -70,9 +100,11 @@ $(document).ready(function () {
             url: url,
             data: formObject
         })
-        .then(data => {
-            console.log(data);
-        })
+            .then(data => {
+                console.log(data);
+                let instance = M.Modal.getInstance($(".modal"));
+                instance.open();
+            })
     });
 
     $("#library_add").submit(function (e) {
@@ -94,7 +126,8 @@ $(document).ready(function () {
             composer: composer,
             refrain: refrain,
             verses,
-            copyright: copyright
+            copyright: copyright,
+            render: true
         };
 
         console.log(formObject);
