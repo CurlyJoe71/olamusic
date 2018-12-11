@@ -7,9 +7,7 @@ $(document).ready(function () {
     let data = {};
     $('input.autocomplete').autocomplete({data});
 
-    let titleObject = {};
     let radioValue;
-
 
     $("input[type='radio']").click(function () {
         radioValue = $("input[name='query']:checked").parent().find("span").text();
