@@ -2,6 +2,7 @@
 var mongojs = require("mongojs");
 var databaseUrl = "ola_music_planner";
 var collections = ["planner", "library"];
+var moment = require("moment");
 
 // Hook mongojs configuration to the db variable
 var db = mongojs(databaseUrl, collections);
@@ -11,8 +12,29 @@ db.on("error", function (error) {
 
 module.exports = function (app) {
 
-  app.get("/all", function (req, res) {
+  app.get("/", function (req, res) {
+    res.render("planner/home");
+  });
+
+  app.get("/all/planner", function (req, res) {
     db.planner.find({}, function (err, data) {
+      if (err) {
+        console.log(err);
+      }
+      else {
+        console.log("I got the data");
+        res.json(data);
+        // res.render("last", data);
+      }
+    });
+  });
+
+  app.post("/all/planner/search", function (req, res) {
+    let request = req.body;
+    console.log(request);
+    console.log(req.body[0]);
+
+    db.planner.findOne({request}, function (err, data) {
       if (err) {
         console.log(err);
       }
@@ -35,7 +57,33 @@ module.exports = function (app) {
     });
   });
 
-  app.put("/search/library", function (req, res) {
+  app.put("/search/library/composer", function (req, res) {
+    console.log("Got search/library request");
+    console.log(req.body);
+    let reqBody = Object.keys(req.body);
+    console.log(reqBody[0]);
+
+    db.library.update({}, { $set: { "render": false } }, { multi: true }, function (err, data) {
+      if (err) {
+        console.log(err);
+      }
+      else {
+
+        db.library.update({ "composer": reqBody[0] }, { $set: { "render": true } }, function (err, data) {
+          if (err) {
+            console.log(err);
+          }
+          else {
+            console.log("finished query");
+            console.log(data);
+            res.send("got it");
+          }
+        })
+      };
+    });
+  });
+
+  app.put("/search/library/title", function (req, res) {
     console.log("Got search/library request");
     console.log(req.body);
     let reqBody = Object.keys(req.body);
@@ -84,13 +132,13 @@ module.exports = function (app) {
       }
       else {
 
-        db.library.find({}, function(err, data) {
+        db.library.find({}, function (err, data) {
           if (err) {
             console.log(err);
           }
           else {
             let obj = {
-              data:data
+              data: data
             };
 
             res.render("planner/library", obj);
@@ -157,56 +205,26 @@ module.exports = function (app) {
     });
   });
 
-  app.get("/home", function (req, res) {
+  app.get("/planner", function (req, res) {
 
-    db.library.update({}, { $set: { "render": true } }, { multi: true }, function (err, data) {
+    db.planner.find({}, function (err, data) {
       if (err) {
         console.log(err);
       }
       else {
+        console.log("I got the data");
 
-        // db.planner.find({}, function (err, data) {
-        //   if (err) {
-        //     console.log(err);
-        //   }
-        //   else {
-        //     console.log("I got the data");
-        //     let obj = {
-        //       caldate: data[0].caldate,
-        //       season: data[0].season,
-        //       litdate: data[0].litdate,
-        //       cycle: data[0].cycle,
-        //       opening: data[0].opening.title,
-        //       opening_composer: data[0].opening.composer,
-        //       prep: data[0].prep.title,
-        //       prep_composer: data[0].prep.composer,
-        //       communion1: data[0].communion1.title,
-        //       communion1_composer: data[0].communion1.composer,
-        //       communion2: data[0].communion2.title,
-        //       communion2_composer: data[0].communion2.composer,
-        //       closing: data[0].closing.title,
-        //       closing_composer: data[0].closing.composer
-        //     };
-        //     console.log(data);
-        //     console.log(obj);
-        //     // res.json(data);
+        for (let i = 0; i < data.length; i ++) {
+          data[i].caldate = moment(data[i].caldate, "MMDDYYYY").format("MMMM Do, YYYY");
+        };
+        let obj = {
+          data
+        };
+        console.log(data);
+        console.log(obj);
+        // res.json(data);
+        res.render("planner/planner_home", obj)
 
-        //     db.library.find({ "title": obj.opening }, function (err, data) {
-        //       if (err) {
-        //         console.log(err);
-        //       }
-        //       else {
-        //         obj.opening_lyrics = {
-        //           refrain: data[0].refrain,
-        //           verses: data[0].verses
-        //         };
-        //       };
-
-        res.render("planner/last");
-
-        //     })
-        //   };
-        // });
       };
     });
   });

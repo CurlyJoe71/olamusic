@@ -1,0 +1,38 @@
+  <div id="buttons">
+    <a href="/"><button class="btn" id="home">Home</button></a>
+   
+<a href="/library" target="_blank"><button class="btn" id="">Library</button></a>
+  </div>
+
+  {{#each data}}
+      <h4>{{ season }}, {{ litdate }}, Year {{ cycle }}</h4>
+      <h5>{{ caldate }}</h5>
+      {{/each}}
+
+<div class="row">
+    <div class="col s12">
+      <div class="row">
+        <div class="input-field col s4">
+          <i class="material-icons prefix">textsms</i>
+          <input type="text" id="autocomplete-input-season" class="autocomplete-season">
+          <label for="autocomplete-input-season">Liturgical Season</label>
+        </div>
+
+        <div class="input-field col s4">
+          <i class="material-icons prefix">textsms</i>
+          <input type="text" id="autocomplete-input-litdate" class="autocomplete-litdate">
+          <label for="autocomplete-input-litdate">Liturgical Date</label>
+        </div>
+ 
+        <div class="input-field col s4">
+          <i class="material-icons prefix">textsms</i>
+          <input type="text" id="autocomplete-input-calyear" class="autocomplete-calyear">
+          <label for="autocomplete-input-calyear">Year</label>
+        </div>
+      </div>
+    </div>
+    <div class="row">
+      <button id="planner-search" class="waves-effect waves-light btn-small"><i class="material-icons left">cloud</i>Search</button>
+
+    </div>
+  </div>
