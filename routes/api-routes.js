@@ -34,7 +34,7 @@ module.exports = function (app) {
     console.log(request);
     console.log(req.body[0]);
 
-    db.planner.findOne({request}, function (err, data) {
+    db.planner.findOne({ request }, function (err, data) {
       if (err) {
         console.log(err);
       }
@@ -47,6 +47,7 @@ module.exports = function (app) {
   });
 
   app.get("/all/library", function (req, res) {
+
     db.library.find({}, function (err, data) {
       if (err) {
         console.log(err);
@@ -214,7 +215,7 @@ module.exports = function (app) {
       else {
         console.log("I got the data");
 
-        for (let i = 0; i < data.length; i ++) {
+        for (let i = 0; i < data.length; i++) {
           data[i].caldate = moment(data[i].caldate, "MMDDYYYY").format("MMMM Do, YYYY");
         };
         let obj = {

@@ -13,7 +13,6 @@ app.use(express.static(__dirname + "/public"));
 app.engine("handlebars", exphbs({ defaultLayout: "main" }));
 app.set("view engine", "handlebars");
 
-// require("./routes/html-routes.js")(app);
 require("./routes/api-routes.js")(app);
 
 var port = process.env.PORT || 3000;
